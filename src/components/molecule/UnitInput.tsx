@@ -1,8 +1,9 @@
-import { formatNumberHuman, isAllowedNumber, isValidNumberKeypress } from '@/utils/common';
-import { BigNumberish, FixedNumber, formatEther, parseEther } from 'ethers';
+import { formatNumberHuman, formatNumberInput, isAllowedNumber, isValidNumberKeypress } from '@/utils/common';
+import { BigNumberish, FixedNumber, formatUnits, parseUnits } from 'ethers';
 import {
     ChangeEventHandler,
     KeyboardEventHandler,
+    MouseEventHandler,
     Ref,
     useEffect,
     useImperativeHandle,
@@ -18,6 +19,7 @@ const UnitInput = ensuredForwardRef<UnitInputRef, UnitInputProps>(
             value,
             onInputUpdate,
             onChangeFn,
+            decimals
         }: UnitInputProps,
         ref: Ref<unknown> | undefined,
     ) => {
@@ -40,7 +42,7 @@ const UnitInput = ensuredForwardRef<UnitInputRef, UnitInputProps>(
             if (!isAllowedNumber(value)) {
                 return;
             }
-            const emitValue = +value === 0 ? (0 as BigNumberish) : parseEther(value);
+            const emitValue = +value === 0 ? 0n : parseUnits(value, decimals);
             onInputUpdate && onInputUpdate(emitValue);
             onChangeFn && onChangeFn(emitValue);
         };
@@ -56,18 +58,18 @@ const UnitInput = ensuredForwardRef<UnitInputRef, UnitInputProps>(
             }
         };
 
-        // const handleMaxClick: MouseEventHandler<HTMLButtonElement> = (e) => {
-        //     e.stopPropagation();
-        //     let adjustedBalance =
-        //         toAdjustForGas && !FixedNumber.fromValue(balance, 18).isZero()
-        //             ? subtractBigNumbersEther(balance, gasEstimate ? gasEstimate : parseEther(MaxInputAdjustment))
-        //             : balance;
-        //     if (isBigNumberLessThan(adjustedBalance, 0)) adjustedBalance = 0;
-        //     onInputUpdate && onInputUpdate(adjustedBalance);
-        //     inputEl.current!.value = formatNumberInput(+formatEther(adjustedBalance)) as string;
+        const handleMaxClick: MouseEventHandler<HTMLButtonElement> = (e) => {
+            e.stopPropagation();
+            let adjustedBalance =
+                !(balance === 0n)
+                    ? balance - parseUnits(MaxInputAdjustment, decimals)
+                    : balance;
+            if (adjustedBalance <0n) adjustedBalance = 0n;
+            onInputUpdate && onInputUpdate(adjustedBalance);
+            inputEl.current!.value = formatNumberInput(+formatUnits(adjustedBalance, decimals)) as string;
 
-        //     onChangeFn && onChangeFn(adjustedBalance);
-        // };
+            onChangeFn && onChangeFn(adjustedBalance);
+        };
 
         useEffect(() => {
             if (!value || !inputEl.current || FixedNumber.fromValue(value, 18).eq(FixedNumber.fromValue(0))) {
@@ -76,14 +78,14 @@ const UnitInput = ensuredForwardRef<UnitInputRef, UnitInputProps>(
                 }
                 return;
             }
-            inputEl.current.value = Number((+formatEther(value)).toFixed(InputPrecision)).toString();
+            inputEl.current.value = Number((+formatUnits(value, decimals)).toFixed(InputPrecision)).toString();
         }, [value, inputEl]);
 
         return (
             <div className="flex flex-col gap-2">
                 <div className='flex items-center justify-between'>
                     <span className='text-xs'>Available Balance</span>
-                    <span className='text-xs'>{formatNumberHuman(+balance.toString())}</span>
+                    <span className='text-xs'>{formatNumberHuman(+formatUnits(balance, decimals))}</span>
                 </div>
                 <div className="flex items-center justify-between bg-input-background border border-white/10 px-2 py-2 rounded-lg">
                     <input
@@ -96,7 +98,7 @@ const UnitInput = ensuredForwardRef<UnitInputRef, UnitInputProps>(
                         onChange={handleInputChange}
                         min={0}
                     ></input>
-                    <button className='text-xs text-green-500 cursor-pointer'>MAX</button>
+                    <button className='text-xs text-green-500 cursor-pointer' onClick={handleMaxClick}>MAX</button>
                 </div>
             </div>
         );
@@ -108,15 +110,16 @@ export default UnitInput;
 
 export interface UnitInputProps {
     variant?: 'primary' | 'secondary' | 'display';
-    balance: BigNumberish;
-    value?: BigNumberish;
-    onInputUpdate?: (num: BigNumberish) => void;
-    onChangeFn?: (value?: BigNumberish) => void;
+    balance: bigint;
+    decimals: number;
+    value?: bigint;
+    onInputUpdate?: (num: bigint) => void;
+    onChangeFn?: (value?: bigint) => void;
 }
 
 export type UnitInputRef = {
     clear: () => void;
-    setValue: (val: BigNumberish, precision?: number) => void;
+    setValue: (val: bigint, precision?: number) => void;
     focus: () => void;
 };
 

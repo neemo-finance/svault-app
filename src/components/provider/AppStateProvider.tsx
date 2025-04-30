@@ -2,6 +2,7 @@
 import { AgentLog, Vault, Token } from "@/constants/types";
 import { usePolling } from "@/hooks/app/polling";
 import useAppData from "@/hooks/appData";
+import { Transaction, useTransactionsManager } from "@/hooks/contract/transactions";
 import { ServerAppData } from "@/utils/ssr";
 import { atom } from "jotai";
 import { useHydrateAtoms } from "jotai/utils";
@@ -37,12 +38,22 @@ const INITIAL_APP_DATA: AppData = {
 
 export const appDataAtom = atom<AppData>(INITIAL_APP_DATA);
 
+export const appTransactionsAtom = atom<Transaction[]>([]);
+
 export enum Events {
     updateAppDataEvent = "updateAppDataEvent",
+    transactionEvent = "transactionEvent",
+    tokenApprovalEvent = "tokenApprovalEvent",
+    depositEvent = "depositEvent",
+    withdrawEvent = "withdrawEvent"
 }
 
 export const appEventsAtom = atom<Record<Events, number>>({
     updateAppDataEvent: 0,
+    transactionEvent: 0,
+    tokenApprovalEvent: 0,
+    depositEvent: 0,
+    withdrawEvent: 0
 });
 
 export default function AppStateProvider({
@@ -54,6 +65,7 @@ export default function AppStateProvider({
 }) {
     usePolling();
     useAppData();
+    useTransactionsManager();
 
     useHydrateAtoms([[appDataAtom, {
         ...INITIAL_APP_DATA,

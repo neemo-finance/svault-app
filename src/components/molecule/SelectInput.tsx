@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
 import { useRef, useState } from "react";
@@ -43,7 +44,9 @@ export default function SelectInput({
 
                 <span className="flex-1">{selectedOption?.label}</span>
 
-                <FaAngleDown className="w-4 h-4" />
+                <FaAngleDown className={clsx("w-4 h-4 transition-transform", {
+                    "rotate-z-180": isOpen
+                })} />
             </div>
             <AnimatePresence>
                 {isOpen && (
