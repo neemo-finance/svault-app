@@ -42,9 +42,13 @@ export default function useAppData() {
                 Promise.all(vault.depositTokens[network]!.map((token) => getDepositTokenData(token)))
             ]);
 
+            console.log({
+                agentLogs
+            })
+
             setAppData((prev) => ({
                 ...prev,
-                agentLogs: agentLogs.length ? agentLogs : prev.agentLogs,
+                agentLogs,
                 currentPosition,
                 userDeposit,
                 depositTokens: depositTokens.reduce((acc, tokenData) => {

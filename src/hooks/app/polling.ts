@@ -10,7 +10,7 @@ enum PollingRate {
 
 const POLLING_INTERVALS = [
     { duration: 120000, interval: 30000 }, // Every 30 secs
-    { duration: Infinity, interval: 90000 }, // Every 90 secs
+    { duration: Infinity, interval: 60000 }, // Every 60 secs
 ];
 
 export const usePolling = () => {

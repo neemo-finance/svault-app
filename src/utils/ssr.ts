@@ -1,5 +1,5 @@
 import { JsonRpcProvider } from "ethers";
-import { getAgentLogs } from "./apiUtils";
+import { getAgentLogs } from "@/app/api/logs/route";
 import { AgentLog } from "@/constants/types";
 import { NETWORK_CONFIG } from "@/constants/web3config";
 import { getReadContract } from "./contractUtils";

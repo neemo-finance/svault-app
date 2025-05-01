@@ -41,10 +41,21 @@ function StatusCard({ log }: { log: AgentLog }) {
 }
 
 const formatTimestamp = (timestamp: number): string => {
-    const date = new Date(timestamp);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    return `${day}/${month} - ${hours}:${minutes}`;
+    const now = Date.now();
+    const elapsed = now - timestamp;
+
+    const seconds = Math.floor(elapsed / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+
+    if (days > 0) {
+        return `${days}d ago`;
+    } else if (hours > 0) {
+        return `${hours}h ago`;
+    } else if (minutes > 0) {
+        return `${minutes}m ago`;
+    } else {
+        return `${seconds}s ago`;
+    }
 };
