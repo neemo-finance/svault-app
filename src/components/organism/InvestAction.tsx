@@ -74,7 +74,7 @@ export const InvestAction = (props: InvestActionProps) => {
                 };
             }
 
-            if (data.userDeposit < props.amount) {
+            if (data.userDeposit.current < props.amount) {
                 return {
                     text: 'Exceeds balance',
                     isDisabled: true,
