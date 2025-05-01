@@ -70,7 +70,7 @@ export default function InvestCard() {
 
                 <UnitInput
                     decimals={tokenConfig[selectedToken].decimals}
-                    balance={(activeTab === "deposit" ? appData.depositTokens[selectedToken]?.balance : appData.userDeposit) || 0n}
+                    balance={(activeTab === "deposit" ? appData.depositTokens[selectedToken]?.balance : appData.userDeposit.current) || 0n}
                     onInputUpdate={setAmount}
                     ref={unitInputRef}
                 />
