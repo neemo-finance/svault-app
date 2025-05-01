@@ -45,7 +45,7 @@ export const VAULT_CONFIG: VaultConfig = {
         mainnet: NETWORK_CONFIG.soneium,
         contract: {
             soneium: {
-                NeemoYieldAgent: "0xBe37aB50d2A292a248F7F9416dA952362F2464F3",
+                NeemoYieldAgent: "0x866a5c73ffC38f7fCFc1bdfA3536c8C880c9aEFe",
             },
         },
         abi: {

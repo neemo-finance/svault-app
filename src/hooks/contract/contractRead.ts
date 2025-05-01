@@ -46,17 +46,32 @@ export default function useContractRead() {
         }
     }
 
-    async function getUserDepositValue(): Promise<bigint> {
-        if (!ethersProvider || !address) return 0n;
+    async function getUserDepositValue(): Promise<{
+        current: bigint;
+        deposit: bigint;
+    }> {
+        if (!ethersProvider || !address) return {
+            current: 0n,
+            deposit: 0n
+        };
         try {
             const contract = await NeemoYieldAgent;
-            if (!contract) return 0n;
+            if (!contract) return {
+                current: 0n,
+                deposit: 0n
+            };
 
             const res = await contract.getUserDepositValue(address);
-            return res;
+            return {
+                current: res[0],
+                deposit: res[1]
+            };
         } catch (error) {
             console.log('error getUserDepositValue', error);
-            return 0n;
+            return {
+                current: 0n,
+                deposit: 0n
+            };
         }
     }
 

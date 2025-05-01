@@ -38,11 +38,11 @@ export default function VaultInfo() {
                 </div>
                 <div className="flex flex-col gap-2 border-r border-white/10 pr-4">
                     <p className="tracking-wide text-base">Your Deposit</p>
-                    <p className="text-3xl font-medium">${formatNumberHuman(+formatUnits(appData.userDeposit))}</p>
+                    <p className="text-3xl font-medium">${formatNumberHuman(+formatUnits(appData.userDeposit.current))}</p>
                 </div>
                 <div className="flex flex-col gap-2">
                     <p className="tracking-wide text-base">Earned</p>
-                    <p className="text-3xl font-medium text-primary">0.00</p>
+                    <p className="text-3xl font-medium text-primary">${formatNumberHuman(+formatUnits(appData.userDeposit.current - appData.userDeposit.deposit))}</p>
                 </div>
             </div>
         </div>

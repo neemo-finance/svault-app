@@ -15,7 +15,10 @@ export interface AppData {
         totalAssets: bigint;
         currentProtocolAPY: bigint;
     },
-    userDeposit: bigint;
+    userDeposit: {
+        current: bigint;
+        deposit: bigint;
+    };
     depositTokens: {
         [T in Token]?: {
             balance: bigint;
@@ -32,7 +35,10 @@ const INITIAL_APP_DATA: AppData = {
         totalAssets: 0n,
         currentProtocolAPY: 0n,
     },
-    userDeposit: 0n,
+    userDeposit: {
+        current: 0n,
+        deposit: 0n,
+    },
     depositTokens: {}
 }
 
