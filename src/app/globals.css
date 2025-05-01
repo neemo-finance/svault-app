@@ -7,6 +7,12 @@
 
     --scrollbar: var(--color-zinc-600);
     --scrollbar-track: hsla(0, 0%, 0%, 0);
+
+    /* Toastify Variables */
+    --toastify-color-light: var(--color-input-background);
+    --toastify-font-family: var(--font-default);
+    --toastify-toast-padding: 0px;
+    --toastify-toast-bd-radius: 8px;
 }
 
 @theme inline {

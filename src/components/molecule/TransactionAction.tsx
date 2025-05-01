@@ -14,7 +14,7 @@ export const TransactionAction: FC<TransactionActionProps> = (props) => {
         uniqueId: undefined as string | undefined, //Gets init when a txn is triggered and reset when the txn is completed
     });
     const { open } = useAppKit();
-    const { address, isConnected } = useAppKitAccount();
+    const { address } = useAppKitAccount();
     const { chainId, switchNetwork } = useAppKitNetwork();
     const { pushTx } = useTransactions();
     const transactions = useAtomValue(appTransactionsAtom);

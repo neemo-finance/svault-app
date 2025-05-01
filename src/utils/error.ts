@@ -1,5 +1,8 @@
 import { EthersError } from 'ethers';
 import { DecodedError, ErrorDecoder } from 'ethers-decode-error';
+import { toast } from 'react-toastify';
+import { ToastIcon } from '@/hooks/app/alerts';
+import ToastContent from '@/components/atom/ToastContent';
 
 export interface ProviderRpcError extends Error {
     code: number;
@@ -29,7 +32,7 @@ export const handleError =
     async (_error: EthersError) => {
         const error = await getErrorMessage(_error);
         if (!isSilent && error) {
-            // toast(createToast(ToastIcon.Error, error));
+            toast(ToastContent(ToastIcon.Error, error));
         }
     };
 

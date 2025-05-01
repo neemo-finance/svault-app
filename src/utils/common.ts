@@ -48,3 +48,10 @@ export const getRandomNumberInRange = (min: number, max: number): number => {
     }
     return Math.floor(Math.random() * (max - min + 1)) + min;
 };
+
+export const toSentenceCase = (string: string) => {
+    const newString = string.toLowerCase().replace(/(^\s*\w|[\.\!\?]\s*\w)/g, function (c) {
+        return c.toUpperCase();
+    });
+    return newString;
+};

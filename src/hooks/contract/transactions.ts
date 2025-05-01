@@ -1,5 +1,5 @@
 import { appEventsAtom, appTransactionsAtom, Events } from '@/components/provider/AppStateProvider';
-// import { ToastIcon, useAlerts } from '@/hooks/app/alerts';
+import { ToastIcon, useAlerts } from '@/hooks/app/alerts';
 import { useEvents } from '@/hooks/app/events';
 import { useAppKitAccount, useAppKitNetwork, useAppKitProvider } from '@reown/appkit/react';
 import { Eip1193Provider } from 'ethers';
@@ -36,7 +36,7 @@ export const useTransactionsManager = () => {
     const walletProvider = useAppKitProvider("eip155").walletProvider as Eip1193Provider | undefined;
     const provider = walletProvider ? new BrowserProvider(walletProvider) : null;
     const { pushEvent } = useEvents();
-    // const { alertError, alertSuccess } = useAlerts();
+    const { alertError, alertSuccess } = useAlerts();
     const appEvents = useAtomValue(appEventsAtom);
     const [transactions, setTransactions] = useAtom(appTransactionsAtom);
     const [value, setValue] = useLocalStorage('svault-transactions', undefined, {
@@ -96,16 +96,16 @@ export const useTransactionsManager = () => {
                         const r = await provider?.getTransactionReceipt(tx.hash);
                         if (r?.status == 0) {
                             const msg = tx.failedMsg ?? 'Transaction failed';
-                            // alertError(msg, tx.hash);
+                            alertError(msg, tx.hash);
                         } else if (r?.status == 1) {
                             const msg = tx.successMsg ?? 'Transaction successful';
-                            // alertSuccess(msg, tx.hash);
+                            alertSuccess(msg, tx.hash);
                             pushEvent(tx.event);
                             tx.onSuccess?.();
                         }
                     } else {
                         const msg = tx.failedMsg ?? 'Transaction failed';
-                        // alertError(msg, tx.hash);
+                        alertError(msg, tx.hash);
                     }
                     continue;
                 }
@@ -138,10 +138,10 @@ export const useTransactions = () => {
         deserializer: (value: any) => JSON.parse(value),
     });
 
-    // const { alertCustom } = useAlerts();
+    const { alertCustom } = useAlerts();
 
     const waitTx = async (hash: string) => {
-        // alertCustom("Processing Transaction", ToastIcon.Loading, undefined, hash);
+        alertCustom("Processing Transaction", ToastIcon.Loading, undefined, hash);
         await provider?.waitForTransaction(hash);
         pushEvent(Events.transactionEvent);
     };
