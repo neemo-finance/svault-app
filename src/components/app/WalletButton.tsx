@@ -14,7 +14,6 @@ export default function WalletButton() {
     
     const { open } = useAppKit();
 
-    // TODO: Replace with actual network check
     const expectedNetwork = VAULT_CONFIG[appData.vault].mainnet;
     const isCorrectNetwork = chainId === expectedNetwork.id;
 
