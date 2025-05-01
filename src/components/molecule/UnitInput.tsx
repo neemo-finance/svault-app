@@ -83,10 +83,6 @@ const UnitInput = ensuredForwardRef<UnitInputRef, UnitInputProps>(
 
         return (
             <div className="flex flex-col gap-2">
-                <div className='flex items-center justify-between'>
-                    <span className='text-xs'>Available Balance</span>
-                    <span className='text-xs'>{formatNumberHuman(+formatUnits(balance, decimals))}</span>
-                </div>
                 <div className="flex items-center justify-between bg-input-background border border-white/10 px-2 py-2 rounded-lg">
                     <input
                         disabled={variant === 'secondary' || variant === 'display'}
@@ -99,6 +95,10 @@ const UnitInput = ensuredForwardRef<UnitInputRef, UnitInputProps>(
                         min={0}
                     ></input>
                     <button className='text-xs text-green-500 cursor-pointer' onClick={handleMaxClick}>MAX</button>
+                </div>
+                <div className='flex items-center justify-between'>
+                    <span className='text-xs'>Available Balance</span>
+                    <span className='text-xs'>{formatNumberHuman(+formatUnits(balance, decimals))}</span>
                 </div>
             </div>
         );

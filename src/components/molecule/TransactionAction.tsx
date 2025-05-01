@@ -126,6 +126,7 @@ export const TransactionAction: FC<TransactionActionProps> = (props) => {
           isLoading={state.processing || (isActiveTransaction === props.transaction.event)}
           {...props.buttonProps}
           disabled={item.isDisabled || state.processing || isActiveTransaction !== false}
+          className={props.buttonProps?.className}
         >
           {(state.processing || (isActiveTransaction === props.transaction.event)) ? "" : item.text}
   

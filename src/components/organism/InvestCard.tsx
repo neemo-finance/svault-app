@@ -42,7 +42,7 @@ export default function InvestCard() {
                 setActiveTab(tabId as "deposit" | "withdraw")
             }
         >
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-2">
                 {/* <p className="text-sm leading-5 text-zinc-400">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                     do eiusmod tempor
@@ -84,6 +84,9 @@ export default function InvestCard() {
                         if (event === "tokenApprovalEvent") return;
                         setAmount(0n);
                         unitInputRef.current?.clear()
+                    }}
+                    buttonProps={{
+                        className: "mt-2"
                     }}
                 />
             </div>
