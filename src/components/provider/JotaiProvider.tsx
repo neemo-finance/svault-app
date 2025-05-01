@@ -19,7 +19,7 @@ export default function JotaiProvider({
                 closeButton={false}
                 hideProgressBar={true}
                 newestOnTop={true}
-                toastClassName={(context) => context?.defaultClassName + " !p-0 border border-white/10"}
+                toastClassName={(context) => context?.defaultClassName + " border border-white/10"}
             />
         </Provider>
     );

@@ -124,4 +124,4 @@ export type UnitInputRef = {
 };
 
 const InputPrecision = 5;
-const MaxInputAdjustment = '0.01';
+const MaxInputAdjustment = '0.0';

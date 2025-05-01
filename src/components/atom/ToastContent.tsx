@@ -1,5 +1,6 @@
 import { ToastIcon } from "@/hooks/app/alerts";
 import { toSentenceCase } from "@/utils/common";
+import clsx from "clsx";
 import {
     IoCheckmarkCircleOutline,
     IoCloseOutline,
@@ -11,7 +12,7 @@ import { TbTransactionBitcoin } from "react-icons/tb";
 
 const Toast = ({ type, title, subtitle }: ToastProps) => {
     return (
-        <div className="flex flex-col px-4 h-full text-zinc-200 text-sm">
+        <div className="flex flex-col px-2 h-full text-zinc-200 text-sm">
             <span className="flex items-start gap-2 leading-4">
                 {type === ToastIcon.Vault && (
                     <MdAttachMoney className="text-primary w-[1.15rem] h-[1.15rem]" />
@@ -44,7 +45,9 @@ const Toast = ({ type, title, subtitle }: ToastProps) => {
                 {toSentenceCase(title.toString())}
             </span>
             {subtitle && (
-                <span className="text-zinc-200 text-xs pl-7">
+                <span className={clsx("text-zinc-200 text-xs", {
+                    "pl-7": type !== ToastIcon.Loading
+                })}>
                     {toSentenceCase(subtitle)}
                 </span>
             )}

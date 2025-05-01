@@ -9,6 +9,7 @@ import { TOKEN_CONFIG, VAULT_CONFIG } from "@/constants/web3config";
 import { Token } from "@/constants/types";
 import { InvestAction } from "./InvestAction";
 import Image from "next/image";
+import Button from "../atom/Button";
 
 export default function InvestCard() {
     const appData = useAtomValue(appDataAtom);

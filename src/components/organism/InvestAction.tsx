@@ -26,6 +26,7 @@ export const InvestAction = (props: InvestActionProps) => {
         if (props.event === Events.depositEvent) {
             if (!props.amount || props.amount <= 0n) {
                 return {
+                    event: props.event,
                     text: 'Enter Amount',
                     isDisabled: true,
                 };
@@ -33,6 +34,7 @@ export const InvestAction = (props: InvestActionProps) => {
 
             if (!userTokenData || userTokenData.balance < props.amount) {
                 return {
+                    event: props.event,
                     text: 'Exceeds balance',
                     isDisabled: true,
                 };
@@ -53,8 +55,8 @@ export const InvestAction = (props: InvestActionProps) => {
             }
 
             return {
-                event: Events.depositEvent,
-                handler: () => deposit,
+                event: props.event,
+                handler: deposit,
                 params: { token: props.token, amount: props.amount! },
                 text: 'Deposit',
                 successMsg: 'Deposited successfully',
@@ -69,6 +71,7 @@ export const InvestAction = (props: InvestActionProps) => {
         else if (props.event === Events.withdrawEvent) {
             if (!props.amount || props.amount <= 0n) {
                 return {
+                    event: props.event,
                     text: 'Enter Amount',
                     isDisabled: true,
                 };
@@ -76,6 +79,7 @@ export const InvestAction = (props: InvestActionProps) => {
 
             if (data.userDeposit.current < props.amount) {
                 return {
+                    event: props.event,
                     text: 'Exceeds balance',
                     isDisabled: true,
                 };
